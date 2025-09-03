@@ -1,4 +1,5 @@
-@import "tailwindcss";
+/* @import "tailwindcss";
+@import './variables.module.css';
 
 :root {
   --background: #ffffff;
@@ -24,3 +25,31 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+ */
+/* THE STYLES ABOVE WERE AUTO CONFIGURED UPON INITIALIZATION OF NEXTJS */
+
+
+
+/* NEW FILE CONFIGURATION HERE: */
+@import "tailwindcss"; 
+/* EVEN THOUGH WE DIDN'T EXPLICITLY APPLY TAILWIND CSS STYLES YET, THERE ARE TAILWIND CSS RESET STYLES THAT COME BUNDLED WITH THE DIRECTIVE ABOVE */
+@import "../styles/variables.module.css";
+/* Other Global styles below */
+
+/* DEVELOPMENT STAGE TESTING; UNCOMMENT THE CODE BELOW TO TEST THAT CSS IN DEVELOPMENT IS WORKING CORRECTLY */
+
+/* html {
+  background-color: brown;
+}
+ */
+
+body {
+  background-color: var(--color-background-primary);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-sans);
+  transition: 
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
+}
+
