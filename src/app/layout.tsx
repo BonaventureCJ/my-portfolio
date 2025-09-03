@@ -1,6 +1,5 @@
 import { Inter } from 'next/font/google';
-
-import { ThemeProvider } from '@/context/ThemeContext';
+import { ThemeProvider } from '@/context/theme-provider';
 import Navigation from '@/components/Navigation/Navigation';
 import Footer from '@/components/Footer/Footer';
 
@@ -22,9 +21,14 @@ export default function RootLayout({
   children: ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body className={inter.className}>
-        <ThemeProvider>
+        {/*
+          The ThemeProvider from `next-themes` should be a client component.
+          The `attribute` prop sets the theme on the html element (e.g., `<html data-theme="dark">`).
+          `enableSystem` allows it to use the user's OS preference.
+        */}
+        <ThemeProvider attribute="data-theme" defaultTheme="system" enableSystem>
           <header>
             <Navigation />
           </header>

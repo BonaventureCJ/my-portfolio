@@ -1,13 +1,29 @@
 'use client'
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useTheme } from '@/lib/hooks/useTheme';
 
-import styles from '@/components/Navigation/Navigation.module.css'
-import { useTheme } from '@/lib/hooks/useTheme'; // Import the useTheme hook
+import styles from '@/components/Navigation/Navigation.module.css';
 
 export default function Navigation() {
-  const { theme, toggleTheme } = useTheme();
+  // `next-themes` requires a check to ensure it's mounted on the client
+  // before you can use the theme value to prevent hydration mismatches.
+  const [mounted, setMounted] = useState(false);
+  const { theme, setTheme, resolvedTheme } = useTheme();
 
-  
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    // Return a placeholder or null to prevent hydration mismatch
+    return null;
+  }
+
+  const handleToggleTheme = () => {
+    const nextTheme = resolvedTheme === 'dark' ? 'light' : 'dark';
+    setTheme(nextTheme);
+  };
 
   return (
     <nav className={styles['navigation']} aria-label="Main">
@@ -16,7 +32,6 @@ export default function Navigation() {
           <Link 
             href="/" 
             className={styles['navigation-link']}
-           
           >
             Home
           </Link>
@@ -25,7 +40,6 @@ export default function Navigation() {
           <Link 
             href="/skills" 
             className={styles['navigation-link']}
-            
           >
             Skills
           </Link>
@@ -34,7 +48,6 @@ export default function Navigation() {
           <Link 
             href="/projects" 
             className={styles['navigation-link']}
-            
           >
             Projects
           </Link>
@@ -43,7 +56,6 @@ export default function Navigation() {
           <Link 
             href="/about" 
             className={styles['navigation-link']}
-           
           >
             About
           </Link>
@@ -52,18 +64,17 @@ export default function Navigation() {
           <Link 
             href="/contact" 
             className={styles['navigation-link']}
-            
           >
             Contact
           </Link>
         </li>
       </ul>
       <button
-        onClick={toggleTheme}
+        onClick={handleToggleTheme}
         className={styles['theme-toggle']}
         aria-label="Toggle theme"
       >
-        {theme === 'light' ? '🌙' : '☀️'}
+        {resolvedTheme === 'light' ? '🌙' : '☀️'}
       </button>
     </nav>
   );
